@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)file:///C:/Users/vasam/OneDrive/Desktop/n.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ammamma Pickles  | Homemade Pickles</title>
+
+<style>
+:root{
+  --primary:#7b1e12;
+  --secondary:#f1c40f;
+  --bg:#fffaf3;
+  --card:#ffffff;
+}
+
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:'Poppins',Arial,sans-serif;
+  background:var(--bg);
+  color:#333;
+}
+/* HEADER */
+header{
+  background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+             url("https://images.unsplash.com/photo-1604908176997-125f25cc6f3d") center/cover no-repeat;
+  color:white;
+  padding:90px 20px;
+  text-align:center;
+  height:450px;
+}
+header h1{font-size:46px;margin-bottom:10px;}
+header p{font-size:18px}
+
+
+/* SECTION */
+section{
+  max-width:1200px;
+  margin:auto;
+  padding:60px 20px;
+}
+h2{
+  text-align:center;
+  color:var(--primary);
+  font-size:32px;
+  margin-bottom:35px;
+}
+
+/* TABS */
+.tabs{
+  text-align:center;
+  margin-bottom:40px;
+}
+.tab-btn{
+  padding:12px 22px;
+  margin:6px;
+  border:none;
+  border-radius:30px;
+  background:var(--secondary);
+  font-weight:600;
+  cursor:pointer;
+}
+.tab-content{display:block}
+
+.qty-btn{
+  padding:4px 10px;
+  border:none;
+  background:#7b1e12;
+  color:white;
+  border-radius:6px;
+  cursor:pointer;
+  margin:0 5px;
+}
+
+.cart-btn{
+  margin-top:10px;
+  background:#27ae60;
+}
+
+#combo .cart-btn{
+  margin-top:10px;
+ background:var(--primary)
+
+}
+
+.tab-btn.active{
+  background:var(--primary);
+  color:white;
+}
+.buy-btn{
+  width:60%;
+  padding:15px;
+  font-size:15px;
+  margin-top:5px;
+
+}
+#combo .buy-btn{
+  width:30%;          
+  padding:15px;
+  font-size:15px;
+  margin-top:5px;
+
+}
+
+/* PRODUCTS */
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
+}
+.btn{
+  transition:0.3s;
+}
+.btn:hover{
+  transform:scale(1.05);
+  background:#a93226;
+}
+.card{
+  background:var(--card);
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+  transition:.3s;
+}
+.card:hover{transform:translateY(-6px)}
+.card img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+}
+
+/* FIXED combo image */
+#combo .card img{
+  width:80%;
+  height:400px;           /* ✅ important */
+  object-fit:contain;    /* ✅ show full image */
+   object-fit:cover;
+margin-top:10px;
+}
+.card-content{
+  padding:20px;
+  text-align:center;
+}
+.card h3{margin:10px 0}
+.badge{
+  background:#27ae60;
+  color:white;
+  padding:4px 12px;
+  border-radius:14px;
+  font-size:13px;
+}
+.price{
+  font-size:18px;
+  font-weight:600;
+  margin:10px 0;
+}
+.card{
+  transition: all 0.3s ease;
+}
+.btn{
+  display:inline-block;
+  padding:12px 22px;
+  background:var(--primary);
+  color:white;
+  text-decoration:none;
+  border-radius:30px;
+  font-weight:600;
+}
+
+/* FOOTER */
+footer{
+  background:var(--primary);
+  color:white;
+  text-align:center;
+  padding:25px;
+  font-size:14px;
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  header h1{font-size:34px}
+}
+.offer-bar{
+  background:#52593b;
+  color:#fff;
+  text-align:center;
+  padding:12px;
+  font-weight:600;
+  font-size:16px;
+  z-index:1000;
+}
+</style>
+</head>
+
+<body>
+<section id="order" style="display:none">
+<h2>Order Details</h2>
+
+<input id="name" placeholder="Name" style="width:100%;padding:10px;margin:10px 0">
+<input id="phone" placeholder="Phone" style="width:100%;padding:10px;margin:10px 0">
+<textarea id="address" placeholder="Address" style="width:100%;padding:10px;margin:10px 0"></textarea>
+
+<h3>Payment Method</h3>
+<label><input type="radio" name="pay" value="Cash on Delivery" checked=""> Cash on Delivery</label><br>
+<label><input type="radio" name="pay" value="UPI"> UPI</label><br>
+
+<button class="btn" onclick="placeOrder()">Place Order (WhatsApp)</button>
+</section>
+<header>
+<input type="text" id="search" placeholder="		Search pickles..." onkeyup="searchPickles()" style="width:20%;padding:15px;margin-bottom:20px;border-radius:20px;">
+<h1>Ammamma Pickles</h1>
+<p><h3>Veg &amp; Non-Veg Pickles | Family Made</h3></p>
+
+</header>
+<section id="cart" style="display:none">
+<h2>Your Cart</h2>
+
+<table style="width:100%;text-align:center">
+<thead>
+<tr>
+<th>Item</th>
+<th>Qty</th>
+<th>Price</th>
+<th>Remove</th>
+</tr>
+</thead>
+
+<tbody id="cartItems"></tbody>
+</table>
+
+<h3 id="total"></h3>
+
+<button class="btn" onclick="showOrder()">Proceed to Order</button>
+</section>
+
+<button class="btn" onclick="showCart()" style="position:fixed;font-size:15px;bottom:40px;right:40px">
+ <b>Cart </b>(<span id="cartCount">0</span>)
+</button>
+<section>
+<div class="offer-bar"><p style="color:#f1c40f ; font-size:20px;"><b><i>
+   Free Delivery on Combo Packs | Free Delivery on Orders Above 3 Items</i></b></p>
+</div>
+<h2>Our Pickles</h2>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab(&#39;veg&#39;,this)">🥭 Veg Pickles</button>
+  <button class="tab-btn" onclick="showTab(&#39;nonveg&#39;,this)">🍗 Non-Veg Pickles</button>
+  <button class="tab-btn" onclick="showTab(&#39;combo&#39;,this)">🎁 Combo Packs</button>
+</div>
+
+<!-- VEG -->
+<div id="veg" class="tab-content">
+
+<div class="products">
+
+<div class="card">
+<img src="./index1_files/Avakaya_product_b8c924df-f742-4876-ad1b-2e957116544a_800x800.jpg">
+<div class="card-content">
+<h3>Avakaya Pickle (మామిడి ఆవకాయ పచ్చడి)</h3>
+<span class="badge">Spicy</span>
+<p class="price">250g – ₹179</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Avakaya Pickle(మామిడి ఆవకాయ పచ్చడి)&#39;,179)">
+Add to Cart
+</button>
+<button class="btn buy-btn" onclick="buyNow(&#39;Avakaya Pickle (మామిడి ఆవకాయ పచ్చడి)&#39;,179)">
+Buy Now
+</button>
+</div>
+</div>
+
+<div class="card">
+<img src="./index1_files/Lemon_w_jaggery_product_1047d2ec-f7ea-4662-8b31-103db02e2f90_800x800.jpg">
+<div class="card-content">
+<h3>Lemon Pickle (నిమ్మకాయ పచ్చడి)</h3>
+<span class="badge">Medium</span>
+<p class="price">250g – ₹159</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Lemon Pickle (నిమ్మకాయ పచ్చడి)&#39;,159)">
+Add to Cart
+</button>
+<button class="btn buy-btn" onclick="buyNow(&#39;Lemon Pickle (నిమ్మకాయ పచ్చడి)&#39;,159)">
+Buy Now
+</button>
+</div>
+</div>
+
+<div class="card">
+<img src="./index1_files/Gongura_product_698eba6b-97a2-4d91-9e8e-b6813950eaf8_800x800.jpg">
+<div class="card-content">
+<h3>Gongura Pickle (గోంగూర పచ్చడి)</h3>
+<span class="badge">Spicy</span>
+<p class="price">250g – ₹149</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Gongura Pickle (గోంగూర పచ్చడి)&#39;,149)">
+Add to Cart
+</button>
+<button class="btn buy-btn" onclick="buyNow(&#39;Gongura Pickle (గోంగూర పచ్చడి)&#39;,149)">
+Buy Now
+</button>
+</div>
+</div>
+<div class="card">
+  <img src="./index1_files/Tomato_product_c7ad15d0-9176-4707-9b02-859f327fa853_800x800.jpg">
+  <div class="card-content">
+    <h3>Tomato Pickle (టమాట పచ్చడి)</h3>
+    <span class="badge">Medium</span>
+    <p class="price">250g – ₹149</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Tomato Pickle (టమాట పచ్చడి)&#39;,149)">
+Add to Cart
+</button>
+   <button class="btn buy-btn" onclick="buyNow(&#39;Tomato Pickle (టమాట పచ్చడి)&#39;,149)"> Buy Now</button>
+  </div>
+</div>
+
+<div class="card">
+  <img src="./index1_files/Garlic_ginger_turmeric_aamchur_96606f33-5701-46e0-8758-3a4d84a117be_800x800.jpg">
+  <div class="card-content">
+    <h3>Garlic Pickle (వెల్లుల్లి పచ్చడి) </h3>
+    <span class="badge">Spicy</span>
+    <p class="price">250g – ₹149</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Garlic Pickle (వెల్లుల్లి పచ్చడి)&#39;,149)">
+Add to Cart
+</button>
+    <button class="btn buy-btn" onclick="buyNow(&#39;Garlic Pickle (వెల్లుల్లి పచ్చడి)&#39;,149)"> Buy Now</button>
+  </div>
+</div>
+
+<div class="card">
+  <img src="./index1_files/Usirikaya_a0611c15-4db7-4240-9fb8-8f5a4838c406_800x800.jpg">
+  <div class="card-content">
+    <h3>Amla Pickle (ఉసిరి పచ్చడి)</h3>
+    <span class="badge">Healthy</span>
+    <p class="price">250g – ₹169</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Amla Pickle (ఉసిరి పచ్చడి)&#39;,169)">
+Add to Cart
+</button>
+    <button class="btn buy-btn" onclick="buyNow(&#39;Amla Pickle (ఉసిరి పచ్చడి)&#39;,169)">Buy Now</button>
+  </div>
+</div>
+
+<div class="card">
+  <img src="./index1_files/Ginger_product_f0f153c9-6d33-43b2-ab61-291e91b235e9_800x800.jpg">
+  <div class="card-content">
+    <h3>Ginger Pickle (అల్లం పచ్చడి)</h3>
+    <span class="badge">Spicy</span>
+    <p class="price">250g – ₹149</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Ginger Pickle (అల్లం పచ్చడి)&#39;,149)">
+Add to Cart
+</button>
+   <button class="btn buy-btn" onclick="buyNow(&#39;Ginger Pickle (అల్లం పచ్చడి)&#39;,149)">Buy Now</button>
+  </div>
+</div>
+
+<div class="card">
+  <img src="./index1_files/Dabbakaya_w_jaggery_product_bed45aa7-44d4-44b6-9df5-937ce595f738_800x800.jpg">
+  <div class="card-content">
+    <h3>Dhabbakaya Pickle (దబ్బకాయ పచ్చడి)</h3>
+    <span class="badge">Extra Spicy</span>
+    <p class="price">250g – ₹169</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Dhabbakaya Pickle (దబ్బకాయ పచ్చడి)&#39;,169)">
+Add to Cart
+</button>
+    <button class="btn buy-btn" onclick="buyNow(&#39;Dhabbakaya Pickle (దబ్బకాయ పచ్చడి)&#39;,169)"> Buy Now</button>
+  </div>
+</div>
+
+<!-- NON VEG -->
+
+
+</div>
+</div>
+<!-- NON VEG -->
+<div id="nonveg" class="tab-content" style="display:none">
+  <div class="products">
+
+    <div class="card">
+      <img src="./index1_files/xfuryufzx4p.webp">
+      <div class="card-content">
+        <h3>Chicken Pickle (చికెన్ పచ్చడి)</h3>
+        <span class="badge">Spicy</span>
+        <p class="price">250g – ₹299</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Chicken Pickle (చికెన్ పచ్చడి)&#39;,299)">
+Add to Cart
+</button>
+        <button class="btn buy-btn" onclick="buyNow(&#39;Chicken Pickle (చికెన్ పచ్చడి)&#39;,299)">
+Buy Now</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="./index1_files/Mutton-Pickle.jpg">
+      <div class="card-content">
+        <h3>Mutton Pickle(మటన్ పచ్చడి)</h3>
+        <span class="badge">Extra Spicy</span>
+        <p class="price">250g – ₹449</p>
+<button class="btn cart-btn" onclick="addToCart(&#39; Mutton Pickle(మటన్ పచ్చడి)&#39;,449)">
+Add to Cart
+</button>
+        <button class="btn buy-btn" onclick="buyNow(&#39; Mutton Pickle(మటన్ పచ్చడి)&#39;,449)">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="./index1_files/03-2-1000x1000.jpg">
+      <div class="card-content">
+        <h3>Prawns Pickle(రొయ్యల పచ్చడి)</h3>
+        <span class="badge">Spicy</span>
+        <p class="price">250g – ₹349</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Prawns Pickle(రొయ్యల పచ్చడి)&#39;,349)">
+Add to Cart
+</button>
+        <button class="btn buy-btn" onclick="buyNow(&#39;Prawns Pickle(రొయ్యల పచ్చడి)&#39;,349)">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="./index1_files/gonura-mutton-1.jpg">
+      <div class="card-content">
+        <h3>Gongura Mutton Pickle(గోంగూర మటన్ పచ్చడి)</h3>
+        <span class="badge">Spicy</span>
+        <p class="price">250g – ₹549</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Gongura Mutton Pickle(గోంగూర మటన్ పచ్చడి)&#39;,549)">
+Add to Cart
+</button>
+         <button class="btn buy-btn" onclick="buyNow(&#39;Gongura Mutton Pickle(గోంగూర మటన్ పచ్చడి)&#39;,549)">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="./index1_files/01-245.jpg">
+      <div class="card-content">
+        <h3>Crab Pickle(పీతల పచ్చడి)</h3>
+        <span class="badge">Medium</span>
+        <p class="price">250g – ₹499</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Crab Pickle(పీతల పచ్చడి)&#39;,499)">
+Add to Cart
+</button>
+        <button class="btn buy-btn" onclick="buyNow(&#39;Crab Pickle(పీతల పచ్చడి)&#39;,499)">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="./index1_files/Gongura-Prawns.jpg">
+      <div class="card-content">
+        <h3>Gongura Prawns Pickle(గోంగూర రొయ్యల పచ్చడి)</h3>
+        <span class="badge">Extra Spicy</span>
+        <p class="price">250g – ₹449</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Gongura Prawns Pickle(గోంగూర రొయ్యల పచ్చడి)&#39;,449)">
+Add to Cart
+</button>
+         <button class="btn buy-btn" onclick="buyNow(&#39;Gongura Prawns Pickle(గోంగూర రొయ్యల పచ్చడి)&#39;,449)"> Buy Now</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="./index1_files/OIP.Pivh7KSzA_Lo4elAg5Yq9gHaE8">
+      <div class="card-content">
+        <h3>Bones Mutton Pickle(ఎముకలులేని మటన్ పచ్చడి)</h3>
+        <span class="badge">Extra Spicy</span>
+        <p class="price">250g – ₹549</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Bones Mutton Pickle (ఎముకలులేని మటన్ పచ్చడి)&#39;,549)">
+Add to Cart
+</button>
+        <button class="btn buy-btn" onclick="buyNow(&#39;Bones Mutton Pickle (ఎముకలులేని మటన్ పచ్చడి)&#39;,549)"> Buy Now</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="./index1_files/02-1-570x570.jpg">
+      <div class="card-content">
+        <h3>Gongura Chicken Boneless Pickle(గోంగూర చికెన్ ఎముకలులేని పచ్చడి)</h3>
+        <span class="badge">Rare</span>
+        <p class="price">250g – ₹449</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Gongura Chicken Boneless Pickle(గోంగూర చికెన్ ఎముకలులేని పచ్చడి)&#39;,449)">
+Add to Cart
+</button>
+         <button class="btn buy-btn" onclick="buyNow(&#39;Gongura Chicken Boneless Pickle(గోంగూర చికెన్ ఎముకలులేని పచ్చడి)&#39;,449)">Buy Now</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- COMBO -->
+<div id="combo" class="tab-content" style="display:none">
+
+<div class="products">
+
+<div class="card">
+<div class="card-content">
+<img src="./index1_files/group-photograph-indian-pickles-like-mango-pickle-lemon-pickle-green-chilli-pickle-sarved-black-ceramic-bowl-selective-focus_466689-61389.jpg" class="combo1-img">
+<h3>Veg Combo Pack</h3>
+<p>Avakaya + Lemon + Gongura<br>(మామిడి ఆవకాయ + నిమ్మ + గోంగూర)</p>
+<p class="price">750g – ₹499</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Avakaya + Lemon + Gongura(మామిడి ఆవకాయ + నిమ్మ + గోంగూర)&#39;,499)">
+Add to Cart
+</button><br>
+<button class="btn buy-btn" onclick="buyNow(&#39;Avakaya + Lemon + Gongura(మామిడి ఆవకాయ + నిమ్మ + గోంగూర)&#39;,499)">
+Buy Now</button>
+</div>
+</div>
+
+<div class="card">
+<div class="card-content">
+<img src="./index1_files/big-prawns-768x1024.jpg" class="combo-img">
+<h3>Non-Veg Combo Pack</h3>
+<p>Chicken + Mutton + Prawns<br>(చికెన్ + మటన్ + రొయ్యలు)</p>
+<p class="price">750g – ₹999</p>
+<button class="btn cart-btn" onclick="addToCart(&#39;Chicken + Mutton + Prawns(చికెన్ + మటన్ + రొయ్యలు)&#39;,999)">
+Add to Cart
+</button><br>
+<button class="btn buy-btn" onclick="buyNow(&#39;Chicken + Mutton + Prawns(చికెన్ + మటన్ + రొయ్యలు)&#39;,999)">
+Buy Now</button>
+</div>
+</div>
+
+</div>
+</div>
+
+</section>
+
+<footer style="font-size:20px;"><b>
+ Homemade Family Pickles ❤️
+</b></footer>
+
+<script>
+let cart = [];
+
+function addToCart(name, price){
+  let item = cart.find(i => i.name === name);
+  if(item) item.qty++;
+  else cart.push({name, price, qty:1});
+  alert("Added to cart");
+}
+function updateCartCount(){
+  let count = 0;
+  cart.forEach(i => count += i.qty);
+  document.getElementById("cartCount").innerText = count;
+}
+function changeQty(i,val){
+  cart[i].qty += val;
+  if(cart[i].qty<=0) cart.splice(i,1);
+  renderCart();
+  updateCartCount();
+  saveCart();
+}
+
+function removeItem(i){
+  cart.splice(i,1);
+  renderCart();
+  updateCartCount();
+  saveCart();
+}
+function showOrder(){
+  document.getElementById("cart").style.display = "none"; // hide cart
+  document.getElementById("order").style.display = "block";
+}
+function placeOrder(){
+  let name = document.getElementById("name").value;
+  let phone = document.getElementById("phone").value;
+  let address = document.getElementById("address").value;
+  let pay = document.querySelector('input[name="pay"]:checked').value;
+
+  let msg = "Order Details:%0A";
+  let total = 0;
+
+  cart.forEach(i=>{
+    msg += `${i.name} x ${i.qty} = ₹${i.price*i.qty}%0A`;
+    total += i.price*i.qty;
+  });
+
+  msg += `%0ATotal: ₹${total}%0A`;
+  msg += `Payment: ${pay}%0A%0A`;
+
+  msg += `Name: ${name}%0APhone: ${phone}%0AAddress: ${address}`;
+
+  if(pay === "UPI"){
+    window.open(`upi://pay?pa=9515996668@airtel&pn=DesiPick&am=${total}&cu=INR`);
+  }
+
+  window.open("https://wa.me/919515996668?text=" + msg);
+}
+function showTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(d=>d.style.display='none');
+  document.getElementById(id).style.display='block';
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function searchPickles(){
+  let input = document.getElementById("search").value.toLowerCase();
+  let cards = document.querySelectorAll(".card");
+
+  cards.forEach(card=>{
+    let name = card.querySelector("h3").innerText.toLowerCase();
+    card.style.display = name.includes(input) ? "" : "none";
+  });
+}
+function saveCart(){
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+function closeCart(){
+  document.getElementById("cart").style.display = "none";
+}
+function showCart(){
+  document.getElementById("cart").style.display = "block";
+  document.getElementById("order").style.display = "none";
+
+  renderCart();
+  updateCartCount();
+}
+
+loadCart();
+function renderCart(){
+  let html="", total=0;
+
+  cart.forEach((i,idx)=>{
+    total += i.price * i.qty;
+
+    html += `
+    <tr>
+      <td>${i.name}</td>
+      <td>
+        <button onclick="changeQty(${idx},-1)">−</button>
+        ${i.qty}
+        <button onclick="changeQty(${idx},1)">+</button>
+      </td>
+      <td>₹${i.price*i.qty}</td>
+      <td><button onclick="removeItem(${idx})">X</button></td>
+    </tr>`;
+  });
+
+  document.getElementById("cartItems").innerHTML = html;
+  document.getElementById("total").innerText = "Total ₹" + total;
+}
+
+loadCart();
+updateCartCount();
+
+function loadCart(){
+  let data = localStorage.getItem("cart");
+  if(data) cart = JSON.parse(data);
+}
+function buyNow(name, price){
+  // store item
+  localStorage.setItem("buyNowItem", JSON.stringify({name, price}));
+
+  // open order page
+  window.location.href = "ind.html";  
+}
+</script>
+</body></html>
